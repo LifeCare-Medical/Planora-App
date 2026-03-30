@@ -831,7 +831,18 @@ elif menu == "🧠 Wisdom Engine":
                     
                     # 1. BUILD THE PROMPT FIRST
                     task_context = "\n".join(task_summary_parts)
-                    prompt = f"""You are the Wisdom Engine AI for Planora... {task_context} ..."""
+                    prompt = f"""
+                    You are the 'Planora Wisdom Engine', a world-class executive coach.
+                    Analyze the following task context: {task_context}
+
+                    ### YOUR STRATEGY:
+                    1. Identify the single most important task (The 80/20 rule).
+                    2. Provide a "Wisdom Nugget" (a powerful one-sentence insight).
+                    3. Ensure the advice is direct, professional, and high-leverage.
+
+                    ### OUTPUT REQUIREMENT:
+                    Return the result in the EXACT valid JSON format required by the Planora app.
+                    """
                     
                     from openai import OpenAI
                     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])

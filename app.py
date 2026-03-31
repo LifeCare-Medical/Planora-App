@@ -122,12 +122,29 @@ def login_screen():
         email = st.text_input("Email", key="signup_email")
         password = st.text_input("Password", type="password", key="signup_pass")
         if st.button("Create Account"):
-            try:
-                supabase.auth.sign_up({"email": email, "password": password})
-                st.success("Account created. Please log in.")
-            except Exception as e:
-                st.error(f"Signup failed: {e}")
+    try:
+        response = supabase.auth.sign_up({
+            "email": email,
+            "password": password
+        })
 
+        # Auto-login after signup
+        login_response = supabase.auth.sign_in_with_password({
+            "email": email,
+            "password": password
+        })
+
+        if login_response.user:
+            st.session_state["user"] = login_response.user
+            st.session_state["session"] = login_response.session
+
+            st.success("Account created. Welcome to Planora!")
+            st.rerun()
+        else:
+            st.warning("Account created, but auto-login failed. Please log in.")
+
+    except Exception as e:
+        st.error(f"Signup failed: {e}")
 if "user" not in st.session_state:
     login_screen()
     st.stop()

@@ -141,7 +141,7 @@ def login_screen():
                     st.success("Account created. Welcome to Planora!")
                     st.rerun()
                 else:
-            st.warning("Account created, but auto-login failed. Please log in.")
+                    st.warning("Account created, but auto-login failed. Please log in.")
 
             except Exception as e:
                 st.error(f"Signup failed: {e}")
